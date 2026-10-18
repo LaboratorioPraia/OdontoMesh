@@ -1,0 +1,31 @@
+name: Build OdontoMesh Unifier for Windows
+on:
+  workflow_dispatch:
+  push:
+    branches: [main, master]
+permissions:
+  contents: read
+jobs:
+  build:
+    runs-on: windows-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+      - name: Setup Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: '22'
+      - name: Install dependencies
+        run: npm install
+      - name: Build Windows app
+        run: npx electron-builder --win dir --x64
+      - name: Package portable application folder
+        shell: pwsh
+        run: Compress-Archive -Path "dist\win-unpacked\*" -DestinationPath "OdontoMeshUnifier-Windows-x64.zip" -Force
+      - name: Upload Windows application artifact
+        uses: actions/upload-artifact@v4
+        with:
+          name: OdontoMeshUnifier-Windows-x64
+          path: OdontoMeshUnifier-Windows-x64.zip
+          if-no-files-found: error
+          retention-days: 14
