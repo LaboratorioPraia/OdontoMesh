@@ -1,0 +1,30 @@
+{
+  "name": "odontomesh-unifier",
+  "version": "1.0.0",
+  "description": "Visualizador e combinador de malhas STL/PLY para laboratório odontológico",
+  "main": "src/main.cjs",
+  "author": "OdontoMesh",
+  "license": "UNLICENSED",
+  "scripts": {
+    "start": "electron .",
+    "build:win": "electron-builder --win dir --x64"
+  },
+  "dependencies": {
+    "three": "0.180.0"
+  },
+  "devDependencies": {
+    "electron": "39.2.7",
+    "electron-builder": "26.0.12"
+  },
+  "build": {
+    "appId": "br.com.odontomesh.unifier",
+    "productName": "OdontoMesh Unifier",
+    "directories": { "output": "dist" },
+    "files": ["src/**/*", "package.json", "node_modules/three/**/*"],
+    "asar": true,
+    "win": {
+      "target": [{ "target": "dir", "arch": ["x64"] }],
+      "signAndEditExecutable": false
+    }
+  }
+}
